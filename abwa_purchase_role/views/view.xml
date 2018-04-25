@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <!--<field name="groups_id" eval="[(6, 0, [ref('abwa_purchase_role.group_hide_stock_buttons') ])]"/>-->
+            <!--<field name="domain_force">[('picking_type_id','=','6')]</field>-->
+                <field name="arch" type="xml">
+                    <button name="do_new_transfer" position="replace">
+                        <button name="do_new_transfer" attrs="{'invisible': ['|',('picking_type_code','=','outgoing'),('state','not in',('draft','partially_available','assigned'))]}" groups="abwa_purchase_role.group_hide_stock_buttons" string="Validate" type="object" class="oe_highlight"/>
+                        <button name="do_new_transfer" string="Validate" groups="stock.group_stock_user" type="object" class="oe_highlight" attrs="{'invisible': ['|',('picking_type_code','=','incoming'),('state','not in',('draft','partially_available','assigned'))]}"/>
+                    </button>
+            </field>
+        </record>
+        <!--<record id="stock_picking_form_inherit_active" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            &lt;!&ndash;<field name="groups_id" eval="[(6, 0, [ref('abwa_purchase_role.group_hide_stock_buttons') ])]"/>&ndash;&gt;
+            &lt;!&ndash;<field name="domain_force">[('picking_type_id','=','6')]</field>&ndash;&gt;
+                <field name="arch" type="xml">
+                    <field name="origin" position="after">
+                        <field name="x_active" invisible="True"/>
+                    </field>
+                    <button name="do_new_transfer" position="replace">
+                        <button name="do_new_transfer" attrs="{'invisible': [('x_active', '=', True)]}" states="draft,partially_available,assigned" string="Validate" type="object" class="oe_highlight"/>
+                    </button>
+            </field>
+        </record>
+
+-->
+		<record id="purchase_invoice_form_inherit" model="ir.ui.view">
+                <field name="name">account.invoice.form</field>
+                <field name="model">account.invoice</field>
+                <field name="inherit_id" ref="account.invoice_supplier_form"/>
+                    <field name="arch" type="xml">
+					<button name="action_invoice_open" position="replace">
+                        <button name="action_invoice_open" type="object" states="draft,proforma2" string="Validate" groups="abwa_purchase_role.group_hide_purchase_invoice_buttons" class="oe_highlight"/>
+					</button>
+
+
+                </field>
+            </record>
+
+    </data>
+</odoo>
+
